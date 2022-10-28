@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "rust_lab"
+name = "ch2_handle_command_line_args"
 version = "0.1.0"
