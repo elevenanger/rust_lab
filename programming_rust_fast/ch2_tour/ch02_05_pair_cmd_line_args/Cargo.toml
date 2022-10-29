@@ -1,5 +1,5 @@
 [package]
-name = "ch2_handle_command_line_args"
+name = "ch02_05_pair_cmd_line_args"
 version = "0.1.0"
 edition = "2021"
 

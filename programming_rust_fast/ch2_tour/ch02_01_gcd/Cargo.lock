@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "ch2_gcd"
+name = "ch02_01_gcd"
 version = "0.1.0"

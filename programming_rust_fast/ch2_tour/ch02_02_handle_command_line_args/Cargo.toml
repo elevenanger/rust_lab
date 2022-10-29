@@ -1,5 +1,5 @@
 [package]
-name = "ch2_gcd"
+name = "ch02_02_handle_command_line_args"
 version = "0.1.0"
 edition = "2021"
 
