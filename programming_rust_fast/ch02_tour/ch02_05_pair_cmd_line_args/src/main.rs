@@ -2,8 +2,8 @@ extern crate core;
 
 use std::str::FromStr;
 use num::Complex;
-use image::{ColorType, ImageEncoder};
-use image::codecs::png::PngEncoder;
+use image::ColorType;
+use image::png::PNGEncoder;
 use std::fs::File;
 use std::env;
 
@@ -25,7 +25,47 @@ fn main() {
                         .expect("下右端点解析失败 ");
     let mut pixels = vec![0; bounds.0 * bounds.1];
 
-    render(&mut pixels, bounds, upper_left, lower_right);
+    let threads = 20;
+    let rows_per_band = bounds.1 / threads + 1;
+
+    {
+        let bands: Vec<&mut [u8]> =
+            pixels.chunks_mut(rows_per_band * bounds.0).collect();
+
+        /// crossbeam::scope(|spawner|{...}).unwrap()
+        /// 是一个 Rust 闭包，它需要一个参数 - spawner
+        /// 和函数不一样的是，我们不需要声明闭包的参数类型
+        /// Rust 会推断它以及它的返回类型
+        crossbeam::scope(|spawner| {
+            /// for (i, band) in bands.into_iter().enumerate()
+            /// 将需要绘制的区域进行切分
+            /// into_iter() 为迭代器中的每一个迭代都有一个切分区域的所有权
+            /// 确保在同一时间只有一个线程可以操作这个区域
+            /// enumerate() 适配器生成 vector 中的每个元素与其索引配对的元组
+            for (i, band) in bands.into_iter().enumerate() {
+                let top = rows_per_band * i;
+                let height = band.len() / bounds.0;
+                let band_bounds = (bounds.0, height);
+                let band_upper_left =
+                    pixel_to_point(bounds, (0, top), upper_left, lower_right);
+                let band_lower_right =
+                    pixel_to_point(bounds, (bounds.0, top + height),
+                                    upper_left, lower_right);
+                /// 创建线程
+                /// move |_| {...}
+                /// move 关键字表示这个闭包对于它使用的变量的所有权
+                /// 参数列表 |_| 表示这个闭包接收一个参数但是它不使用
+                spawner.spawn(move |_| {
+                    render(band, band_bounds, band_upper_left, band_lower_right);
+                });
+            }
+        }).unwrap();
+    }
+
+    ///render(&mut pixels, bounds, upper_left, lower_right);
+
+    write_image(&args[1], &pixels, bounds)
+        .expect("绘图异常");
 }
 
 /// <T:FromStr> 表示任意实现了 FromStr 的类型
@@ -79,6 +119,7 @@ fn render(pixels: &mut [u8],
             bounds: (usize, usize),
             upper_left: Complex<f64>,
             lower_right: Complex<f64>) {
+
     assert!(pixels.len() == bounds.0 * bounds.1);
 
     for row in 0..bounds.1 {
@@ -104,11 +145,14 @@ fn write_image(filename:&str, pixels: &[u8], bounds: (usize, usize))
      */
     let output = File::create(filename)?;
 
-    let encoder = PngEncoder::new(output);
-    encoder.write_image(&pixels,
-                        bounds.0 as u32, bounds.1 as u32,
-                        ColorType::L8)
-                            .expect_err("绘图异常");
+    let encoder = PNGEncoder::new(output);
+   /// encoder.write_image(&pixels,
+   ///                     bounds.0 as u32, bounds.1 as u32,
+   ///                     ColorType::L8)
+   ///                         .expect_err("绘图异常");
+    encoder.encode(&pixels,
+                   bounds.0 as u32, bounds.1 as u32,
+                    ColorType::Gray(8))?;
     Ok(())
 }
 

@@ -1,10 +1,10 @@
 [package]
-name = "ch02_05_pair_cmd_line_args"
+name = "ch02_06_quickreplace"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-num = "0.4"
-image = "0.24.4"
+text-colorizer = "1"
+regex = "1"
