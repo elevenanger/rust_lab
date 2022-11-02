@@ -8,6 +8,8 @@
       <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch02_tour/ch02_01_gcd/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch02_tour/ch02_06_quickreplace/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch03_fundamental_types/ch_03_01_fixed_width_numeric_types/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch04_ownership_and_moves/ch04_01_ownership/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch04_ownership_and_moves/ch04_02_moves/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch2_tour/02_handle_command_line_args/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch2_tour/03_actic_gcd/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch2_tour/ch02_01_gcd/src" isTestSource="false" />
@@ -39,6 +41,12 @@
       <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch02_tour/ch02_01_gcd/target" />
       <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch03_fundamental_types/ch_03_01_fixed_width_numeric_types/target" />
       <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch02_tour/ch02_06_quickreplace/target" />
+      <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch02_tour/ch02_02_handle_command_line_args/target" />
+      <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch02_tour/ch02_03_actic_gcd/target" />
+      <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch02_tour/ch02_04_mandelbrot/target" />
+      <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch02_tour/ch02_05_pair_cmd_line_args/target" />
+      <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch04_ownership_and_moves/ch04_01_ownership/target" />
+      <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch04_ownership_and_moves/ch04_02_moves/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
