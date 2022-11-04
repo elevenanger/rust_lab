@@ -1,5 +1,4 @@
-use std::os::unix::raw::ino_t;
-use std::ptr::NonNull;
+use std::rc::Rc;
 
 fn main() {
     moves();
@@ -11,6 +10,8 @@ fn main() {
     moves_and_indexed_content();
 
     copy_types();
+
+    rc_and_arc();
 }
 
 /// Rust 中的 move 特性
@@ -249,7 +250,7 @@ fn moves_and_indexed_content() {
 }
 
 /// copy 类型
-/// 简单类型 字符串指针、整数、字符等可以直接将值赋值给其它的变量
+/// 简单类型 整数、字符等可以直接将值赋值给其它的变量
 /// 在栈内存上分配空间
 /// 赋值给其它变量会获得一份完整的拷贝
 /// 赋值 copy 类型变量会得到一份完整的拷贝，而不是 move 它
@@ -268,6 +269,29 @@ fn moves_and_indexed_content() {
 /// println!("c1 => {} c2 => {}", c1, c2);
 /// }
 /// ```
+///
+/// 标准的 Copy 类型包括所有的机器整数、浮点数、 char 和 bool 类型等
+/// Copy 类型的元祖和定长数组也是 Copy 类型
+/// 只有这种可以通过逐位赋值的类型可以称为 Copy 类型
+///
+/// ```
+/// let copied_pair = int_pair;
+/// println!("copied pair => {:?}", copied_pair);
+///
+/// let nums = [1, 2, 3, 4, 5];
+/// let copied_nums = nums;
+/// println!("copied nums => {:?}", copied_nums);
+/// ```
+///
+/// 用户定义的类型，struct 默认是非 Copy 类型
+/// 但是如果 struct 中所有的域都是 Copy 类型
+/// 可以加上 #[derive(Copy, Clone)] 注解在 struct 定义上将其变为 Copy 类型
+/// ```
+/// #[derive(Copy, Clone)]
+/// struct Person {age: i32};
+/// let a = Person {age: 12};
+/// let b = a;
+/// ```
 fn copy_types() {
     let s1 = "string_x";
     let s2 = s1;
@@ -280,4 +304,34 @@ fn copy_types() {
     let c1 = 'c';
     let c2 = c1;
     println!("c1 => {} c2 => {}", c1, c2);
+
+    let int_pair = (10, 20);
+    let copied_pair = int_pair;
+    println!("copied pair => {:?}", copied_pair);
+
+    let nums = [1, 2, 3, 4, 5];
+    let copied_nums = nums;
+    println!("copied nums => {:?}", copied_nums);
+
+    #[derive(Copy, Clone)]
+    struct Person {age: i32};
+    let a = Person {age: 12};
+    let b = a;
+    println!("b.age => {}", b.age);
+}
+
+/// Rc 和 Arc 类型
+/// 引用计数指针类型
+/// Rc 和 Arc 唯一的区别是 Arc 是线程安全的
+/// Rc<T> 的值是一个指向堆上分配的 T 的指针，以及一个指针计数
+/// 克隆 Rc<T> 不会拷贝 T
+/// 而是创建另一指向 T 的指针并将计数增加
+/// 常规的所有权规则适用于指针本身
+/// 当所有的 Rc 都丢弃掉了， Rust 也会丢弃调 String
+fn rc_and_arc() {
+    let s: Rc<String> = Rc::new("string".to_string());
+    let t = s.clone();
+    let u = s.clone();
+
+    println!("s => {:?} t => {:?} u => {:?}", s, t, u);
 }
