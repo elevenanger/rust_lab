@@ -6,6 +6,8 @@ fn main() {
     references_to_references();
 
     comparing_references();
+
+    borrowing_reference_to_expressions();
 }
 
 /// Rust 中的引用和解引用
@@ -132,4 +134,28 @@ fn comparing_references() {
 fn reference_are_never_null() -> Option<&'static str> {
     "something";
     None
+}
+
+/// 借用对任意表达式的引用:
+/// 将 & 操作符运用在表达式上， Rust 可以借用表达式的值的引用。
+/// ```
+/// let r = &factorial(6);
+/// assert_eq!(r + &1, 721);
+/// ```
+/// 在这种场景下，Rust 创建了一个匿名变量保存表达式的值并创建了指向它的引用。
+/// 匿名变量的声明周期取决于：
+/// - 如果立即将这个引用赋值给变量通过 let 语句
+/// 或者作为结构或者数组的一部分，
+/// Rust 使得这个匿名变量的生命周期和 let 初始化的变量的生命周期一样长。
+/// - 如果没有赋值给其它的变量，匿名变量的声明周期为它所在的封闭代码块。
+fn borrowing_reference_to_expressions() {
+    /* &factorial(6) 的生命周期和 r 变量的生命周期一致 */
+    let r = &factorial(6);
+    /* 算数运算符可以解一级引用
+     &1 的生命周期在这个 assert_eq! 语句内 */
+    assert_eq!(r + &1, 721);
+}
+
+fn factorial(n: usize) -> usize {
+    return (1..n+1).product();
 }

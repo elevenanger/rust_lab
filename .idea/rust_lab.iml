@@ -22,6 +22,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch05_references/ch05_01_references_to_values/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch05_references/ch05_02_working_with_reference/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch05_references/ch05_03_reference_safety/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/ch2_gcd/target" />
       <excludeFolder url="file://$MODULE_DIR$/ch2_handle_command_line_args/target" />
@@ -51,6 +52,7 @@
       <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch04_ownership_and_moves/ch04_02_moves/target" />
       <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch05_references/ch05_01_references_to_values/target" />
       <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch05_references/ch05_02_working_with_reference/target" />
+      <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch05_references/ch05_03_reference_safety/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
