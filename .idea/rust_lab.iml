@@ -25,6 +25,20 @@
       <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch05_references/ch05_03_reference_safety/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch05_references/ch05_04_sharing_versus_mutation/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_01_expression_language/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_03_blocks_and_semicolons/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_04_if_and_match/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_05_if_let/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_06_loops/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_07_control_flow_in_loops/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_08_return_expression/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_10_function_and_method_call/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_11_fields_and_elements/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_12_reference_operators/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_13_arithmetic_bitwise_comparison_logical_operators/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_14_assignment/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_15_type_casts/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_16_closures/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch07_error_handling/ch07_01_panic/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/ch2_gcd/target" />
       <excludeFolder url="file://$MODULE_DIR$/ch2_handle_command_line_args/target" />
@@ -57,6 +71,20 @@
       <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch05_references/ch05_03_reference_safety/target" />
       <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch05_references/ch05_04_sharing_versus_mutation/target" />
       <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_01_expression_language/target" />
+      <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_03_blocks_and_semicolons/target" />
+      <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_04_if_and_match/target" />
+      <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_05_if_let/target" />
+      <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_06_loops/target" />
+      <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_07_control_flow_in_loops/target" />
+      <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_08_return_expression/target" />
+      <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_10_function_and_method_call/target" />
+      <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_11_fields_and_elements/target" />
+      <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_12_reference_operators/target" />
+      <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_13_arithmetic_bitwise_comparison_logical_operators/target" />
+      <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_14_assignment/target" />
+      <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_15_type_casts/target" />
+      <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch06_expressions/ch06_16_closures/target" />
+      <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch07_error_handling/ch07_01_panic/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
