@@ -1,5 +1,5 @@
 [package]
-name = "ch08_01_crates"
+name = "fern_sim"
 version = "0.1.0"
 edition = "2021"
 

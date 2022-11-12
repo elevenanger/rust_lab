@@ -41,6 +41,7 @@
       <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch07_error_handling/ch07_01_panic/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch07_error_handling/ch07_02_result/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch08_crates_and_modules/ch08_01_crates/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/programming_rust_fast/ch08_crates_and_modules/ch08_02_modules/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/ch2_gcd/target" />
       <excludeFolder url="file://$MODULE_DIR$/ch2_handle_command_line_args/target" />
@@ -89,6 +90,7 @@
       <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch07_error_handling/ch07_01_panic/target" />
       <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch07_error_handling/ch07_02_result/target" />
       <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch08_crates_and_modules/ch08_01_crates/target" />
+      <excludeFolder url="file://$MODULE_DIR$/programming_rust_fast/ch08_crates_and_modules/ch08_02_modules/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
