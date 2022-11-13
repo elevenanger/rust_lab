@@ -1,0 +1,8 @@
+[workspace]
+members = ["ch06_01_expression_language", "ch06_03_blocks_and_semicolons",
+            "ch06_04_if_and_match", "ch06_05_if_let",
+            "ch06_06_loops", "ch06_07_control_flow_in_loops",
+            "ch06_08_return_expression", "ch06_10_function_and_method_call",
+            "ch06_11_fields_and_elements", "ch06_12_reference_operators",
+            "ch06_13_arithmetic_bitwise_comparison_logical_operators", "ch06_14_assignment",
+            "ch06_15_type_casts", "ch06_16_closures"]

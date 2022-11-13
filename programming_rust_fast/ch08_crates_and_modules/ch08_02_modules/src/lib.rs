@@ -1,5 +1,6 @@
 mod spores;
 pub mod plant_structures;
+mod tests;
 
 /// 将一个程序转换成库的步骤：
 /// - 重命名 src/main.rs 为 lib.rs

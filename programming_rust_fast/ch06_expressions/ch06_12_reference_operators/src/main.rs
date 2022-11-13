@@ -23,10 +23,13 @@ fn reference_operator() {
     println!("num => {}", *num);
 }
 
-struct Person {name: String, age: u8}
+struct Person {
+    name: String,
+    age: u8,
+}
 
 fn build_personal_file(name: String, age: u8) -> Person {
-    Person {name, age}
+    Person { name, age }
 }
 
 fn desc_person(person: &Person) {

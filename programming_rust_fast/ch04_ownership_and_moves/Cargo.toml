@@ -1,0 +1,2 @@
+[workspace]
+members = ["ch04_01_ownership", "ch04_02_moves"]

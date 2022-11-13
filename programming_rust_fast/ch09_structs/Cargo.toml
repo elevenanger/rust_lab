@@ -1,0 +1,2 @@
+[workspace]
+members = ["ch09_01_named_field_structs"]

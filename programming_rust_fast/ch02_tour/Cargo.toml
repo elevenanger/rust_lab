@@ -1,0 +1,4 @@
+[workspace]
+members = ["ch02_01_gcd", "ch02_02_handle_command_line_args",
+            "ch02_03_actic_gcd", "ch02_04_mandelbrot",
+            "ch02_05_pair_cmd_line_args", "ch02_06_quickreplace"]

@@ -1,0 +1,2 @@
+[workspace]
+members = ["ch07_01_panic", "ch07_02_result"]

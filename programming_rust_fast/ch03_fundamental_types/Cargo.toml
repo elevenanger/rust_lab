@@ -1,0 +1,2 @@
+[workspace]
+members = ["ch_03_01_fixed_width_numeric_types"]

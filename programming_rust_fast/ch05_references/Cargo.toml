@@ -1,0 +1,3 @@
+[workspace]
+members = ["ch05_01_references_to_values", "ch05_02_working_with_reference",
+            "ch05_03_reference_safety", "ch05_04_sharing_versus_mutation"]
