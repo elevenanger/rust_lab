@@ -3,4 +3,6 @@
 .vscode
 /*/*/*/target
 /*/*/*/Cargo.lock
+/*/*/target
+/*/*/Cargo.lock
 *.swp
