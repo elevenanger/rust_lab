@@ -1,2 +1,11 @@
 [workspace]
-members = ["ch09_01_named_field_structs"]
+members = [
+    "ch09_01_named_field_structs",
+    "ch09_02_tuple_like_structs",
+    "ch09_03_unit_like_structs",
+    "ch09_04_struct_layout",
+    "ch09_05_defining_methods_with_impl",
+    "ch09_06_passing_self_as_smart_pointer",
+    "ch09_07_type_associated_functions",
+    "ch09_08_associated_consts"
+]

@@ -42,10 +42,33 @@ fn new_person(name: &str, age: u8) -> Person {
     }
 }
 
+/// 创建一个命名字段的结构，可以使用其它相同结构的值提供缺省字段的值，
+/// 在结构表达式中，如果字段名后面跟着 .. 表达式，
+/// 则任何未提及的字段的值都来自于该表达式，
+/// 这个表达式必须是另外一个相同类型结构的值。
+fn split_people(p: Person) -> (Person, Person) {
+    let mut p1 = Person {.. p};
+    /* 因为 String 不是 Copy 类型，必须显式地克隆它 */
+    let mut p2 = Person {name: p1.name.clone(), .. p1};
+    p1.name.push_str(" I");
+    p2.name.push_str(" II");
+    (p1, p2)
+}
+
 #[test]
 fn test_create_person() {
     let an = new_person("An", 10);
     /* 使用 . 运算符获取结构中的字段 */
     assert_eq!(an.name, "An");
     assert_eq!(an.age, 10);
+}
+
+#[test]
+fn test_split_people() {
+    let an = new_person("An", 10);
+    let (an_1, an_2) = split_people(an);
+    assert_eq!(an_1.name, "An I");
+    assert_eq!(an_1.age, 10);
+    assert_eq!(an_2.name, "An II");
+    assert_eq!(an_2.age, 10);
 }
