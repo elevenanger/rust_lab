@@ -7,5 +7,9 @@ members = [
     "ch09_05_defining_methods_with_impl",
     "ch09_06_passing_self_as_smart_pointer",
     "ch09_07_type_associated_functions",
-    "ch09_08_associated_consts"
+    "ch09_08_associated_consts",
+    "ch09_09_generic_structs",
+    "ch09_10_structs_with_lifetime_parameters",
+    "ch09_11_deriving_common_traits_for_struct_types",
+    "ch09_12_interior_mutability"
 ]
