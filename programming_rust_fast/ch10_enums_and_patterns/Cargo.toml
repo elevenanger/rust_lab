@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "ch10_01_enums",
+    "ch10_02_patterns",
+]
