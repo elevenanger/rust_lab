@@ -66,7 +66,6 @@ pub mod generic_enums {
 
 #[test]
 fn test_add() {
-    let mut number_tree = BinaryTree::Empty;
     number_tree.add(10);
     number_tree.add(20);
     number_tree.add(5);

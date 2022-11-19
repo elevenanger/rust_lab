@@ -1,0 +1,9 @@
+[package]
+name = "ch11_05_full_qualified_method_calls"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+ch11_04_defining_and_implementing_traits = {path = "../ch11_04_defining_and_implementing_traits"}

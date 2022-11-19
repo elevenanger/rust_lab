@@ -3,7 +3,7 @@ pub mod plant_structures;
 mod tests;
 
 /// 将一个程序转换成库的步骤：
-/// - 重命名 src/main.rs 为 lib.rs
+/// - 重命名 src/lib.rs 为 lib.rs
 /// - 将库中的 public 特性加上 pub 关键字
 /// 不需要改变 Cargo.toml 文件，
 /// Cargo 会查找源目录来推算需要构建的内容，

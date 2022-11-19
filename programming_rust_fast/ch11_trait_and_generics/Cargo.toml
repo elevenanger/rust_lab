@@ -1,8 +1,9 @@
-[package]
-name = "ch11_trait_and_generics"
-version = "0.1.0"
-edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
+[workspace]
+members = [
+    "ch11_01_using_traits",
+    "ch11_02_trait_object",
+    "ch11_03_generic_functions_and_type_parameters",
+    "ch11_04_defining_and_implementing_traits",
+    "ch11_05_full_qualified_method_calls",
+    "ch11_06_trait_define_relationship_btween_types"
+]
