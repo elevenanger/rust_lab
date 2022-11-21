@@ -1,7 +1,11 @@
 mod unary_operator;
+mod binary_operator;
+mod compound_assignment_operators;
+mod equivalence_comparisons;
+mod ordered_comparisons;
+mod index_mut;
 
 use std::ops::Add;
-use PartialEq;
 
 #[test]
 fn test_add() {
@@ -12,7 +16,7 @@ fn test_add() {
     assert_eq!(1.add(2), 1 + 2);
 }
 
-#[derive(PartialEq, Debug)]
+#[derive(Debug)]
 pub struct Complex<T> {
     re: T,
     im: T,
