@@ -22,7 +22,7 @@ impl Drop for Appellation {
 
 #[test]
 fn test_appellation_drop() {
-    let mut a  = Appellation {
+    let mut _a  = Appellation {
         name: "Sun Wukong".to_string(),
         nickname: vec![
             "Mei hou wang".to_string(),
@@ -31,6 +31,6 @@ fn test_appellation_drop() {
     };
 
     println!("Before Dropping.");
-    a = Appellation {name: "Wang".to_string(), nickname: vec![]};
+    _a = Appellation {name: "Wang".to_string(), nickname: vec![]};
     println!("End of block.");
 }

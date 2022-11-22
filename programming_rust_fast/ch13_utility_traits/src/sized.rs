@@ -56,7 +56,7 @@ use std::fmt::Display;
 /// 这个转换在将值作为实参传递的时候由 Rust 隐式地进行。
 /// ```
 /// let boxed_lunch: RcBox<String> =
-///     RcBox {ref_count: 1, value: "lunch".to_string()};
+///     RcBox {value: "lunch".to_string()};
 /// let boxed_display:  &RcBox<dyn std::fmt::Display> = &boxed_lunch;
 /// print_things(&boxed_display);
 /// ```
@@ -65,14 +65,13 @@ fn print_things(boxed: &RcBox<dyn Display>) {
 }
 
 struct RcBox<T: ?Sized> {
-    ref_count: usize,
     value: T
 }
 
 #[test]
 fn test_rc_box() {
     let boxed_lunch: RcBox<String> =
-        RcBox {ref_count: 1, value: "lunch".to_string()};
+        RcBox {value: "lunch".to_string()};
     let boxed_display:  &RcBox<dyn Display> = &boxed_lunch;
     print_things(&boxed_display);
 }
