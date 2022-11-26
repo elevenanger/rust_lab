@@ -75,3 +75,22 @@ fn test_fibonacci() {
     let fibs = fibonacci(10);
     println!("{:?}", fibs);
 }
+
+/// drain 方法接收一个集合的 mut 引用作为参数，
+/// 返回一个 Iterator 将每个元素的所有权转移给消费者，
+/// 和 into_iter 不一样的是，
+/// into_iter 按值接收 Iterator 并消费它，
+/// drain 仅仅借用了集合的 mut ref，
+/// 当丢弃迭代器时，
+/// 它会将集合剩余的元素移除并将其留空,
+/// 如果是可以通过 range 索引的类型，
+/// drain 方法接收一个区间的元素进行移除，
+/// 而不是移除整个序列。
+#[test]
+fn test_drain() {
+    let mut outer = "mutability".to_string();
+    let inner = String::from_iter(outer.drain(0..3));
+
+    assert_eq!(outer, "ability");
+    assert_eq!(inner, "mut");
+}

@@ -1,5 +1,7 @@
 mod iterator_and_into_iterator;
 mod create_iterator;
+mod iterator_adapters;
+mod consuming_iterators;
 
 /// 使用迭代器的 fold 方法，
 /// ```
