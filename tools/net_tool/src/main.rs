@@ -1,9 +1,16 @@
 use std::collections::HashMap;
+use std::error::Error;
+use std::fs::File;
+use std::io::{Read, Write};
 use rustdns::Message;
 use rustdns::types::*;
 use std::net::UdpSocket;
 use std::time::Duration;
+use curl::easy::Easy;
 use ipinfo::{IpDetails, IpError, IpInfo, IpInfoConfig};
+
+type GenericError = Box<dyn Error + Send + Sync + 'static>;
+type GenericResult<T> = Result<T, GenericError>;
 
 fn udp(domain: &str, query_type: Type) -> std::io::Result<Message> {
     // A DNS Message can be easily constructed
@@ -71,11 +78,39 @@ fn format_ip_details(details: HashMap<String, IpDetails>) {
     )
 }
 
+fn get_local_ip_addr() -> Option<String> {
+    let socket = UdpSocket::bind("0.0.0.0:0").unwrap();
+    socket.connect("8.8.8.8:83").unwrap();
+    match socket.local_addr() {
+        Ok(addr) => Some(addr.ip().to_string()),
+        Err(_) => None
+    }
+}
+
+fn get_public_ip() -> GenericResult<String> {
+    let mut buf = File::create("./ip.dat")?;
+    let mut handle = Easy::new();
+    handle.url("https://ifconfig.me/")?;
+
+    let mut transfer = handle.transfer();
+    transfer.write_function(|data| {
+        write!(buf, "{}", String::from_utf8(data.to_vec()).unwrap()).unwrap();
+        Ok(data.len())
+    })?;
+    transfer.perform()?;
+
+    let mut reader = File::open("./ip.dat")?;
+    let mut s = String::new();
+    reader.read_to_string(&mut s)?;
+    Ok(s)
+}
+
 fn main() {
-    let domain = "www.landbank.com.tw";
-    let query_type = Type::AAAA;
+    let domain = "mps.dgcb.com.cn";
+    let query_type = Type::ANY;
     let dns_result = udp(domain, query_type).unwrap();
-    let ips = dns_message_to_ip_vec(dns_result);
+    let mut ips = dns_message_to_ip_vec(dns_result);
+    ips.push(get_public_ip().expect(""));
     println!("records => {:?}", &ips);
 
     let details =
@@ -83,4 +118,5 @@ fn main() {
             .unwrap();
 
     format_ip_details(details);
+
 }
