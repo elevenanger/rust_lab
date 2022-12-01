@@ -106,7 +106,7 @@ fn get_public_ip() -> GenericResult<String> {
 }
 
 fn main() {
-    let domain = "mps.dgcb.com.cn";
+    let domain = "mgs.dgcb.com.cn";
     let query_type = Type::ANY;
     let dns_result = udp(domain, query_type).unwrap();
     let mut ips = dns_message_to_ip_vec(dns_result);
