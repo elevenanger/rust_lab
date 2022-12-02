@@ -100,6 +100,7 @@ fn test_read_exact() -> TestResult {
     reader.read_exact(&mut buffer)?;
     let mut writer = stdout();
     writer.write_all(&buffer)?;
+    writer.flush()?;
     Ok(())
 }
 
@@ -122,6 +123,7 @@ fn test_reader_chain() -> TestResult {
     let mut buf = [0; 256];
     reader1.chain(reader2).read(&mut buf)?;
     stdout().write_all(&buf)?;
+    stdout().flush()?;
     Ok(())
 }
 
@@ -133,6 +135,7 @@ fn test_reader_take() -> TestResult {
     let mut s = String::new();
     reader.read_to_string(&mut s)?;
     stdout().write_all(&s.as_bytes())?;
+    stdout().flush()?;
     Ok(())
 }
 
@@ -157,3 +160,58 @@ fn test_buffered_read() -> TestResult {
         s.clear()
     }
 }
+
+/// lines() 返回一个输入行数据的 iterator ,
+/// 这个方法常用于处理文本输入
+#[test]
+fn test_reader_lines() -> TestResult {
+    let reader = BufReader::new(File::open("Cargo.toml")?);
+    let mut line_no = 0;
+    reader.lines().for_each(|line| {
+        line_no += 1;
+        println!("line {} => {}", line_no, line.unwrap())
+    });
+    Ok(())
+}
+
+/// read_until(b, buf) 从 input 读取到指定字符，
+/// 将读取到的数据写入 buf 中
+#[test]
+fn test_read_until() -> TestResult {
+    let mut buffer: Vec<u8> = Vec::new();
+    let mut reader = BufReader::new(File::open("Cargo.toml")?);
+
+    reader.read_until(b'\n',&mut buffer)?;
+    stdout().write_all(buffer.as_slice())?;
+    stdout().flush()?;
+    Ok(())
+}
+
+/// split() 对读入的数据进行拆分
+#[test]
+fn test_read_split() -> TestResult {
+    let reader = BufReader::new(File::open("Cargo.toml")?);
+    reader.split(b'a')
+        .map(Result::unwrap)
+        .for_each(|part| println!("{}", String::from_utf8_lossy(part.as_slice()))
+    );
+    Ok(())
+}
+
+fn grep<R>(target: &str, reader: R) -> TestResult
+where R: BufRead {
+    for line_result in reader.lines() {
+        let line = line_result?;
+        if line.contains(target) {
+            println!("{}", line)
+        }
+    }
+    Ok(())
+}
+
+#[test]
+fn test_grep() -> TestResult {
+    let reader = File::open("Cargo.toml")?;
+    grep("[", BufReader::new(reader))
+}
+
