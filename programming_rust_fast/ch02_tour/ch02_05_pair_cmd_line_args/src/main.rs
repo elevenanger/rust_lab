@@ -25,45 +25,28 @@ fn main() {
                         .expect("下右端点解析失败 ");
     let mut pixels = vec![0; bounds.0 * bounds.1];
 
-    let threads = 20;
-    let rows_per_band = bounds.1 / threads + 1;
-
     {
-        let bands: Vec<&mut [u8]> =
-            pixels.chunks_mut(rows_per_band * bounds.0).collect();
+        let bands: Vec<(usize, &mut [u8])> = pixels
+            .chunks_mut(bounds.0)
+            .enumerate()
+            .collect();
 
-        /// crossbeam::scope(|spawner|{...}).unwrap()
-        /// 是一个 Rust 闭包，它需要一个参数 - spawner
-        /// 和函数不一样的是，我们不需要声明闭包的参数类型
-        /// Rust 会推断它以及它的返回类型
-        crossbeam::scope(|spawner| {
-            /// for (i, band) in bands.into_iter().enumerate()
-            /// 将需要绘制的区域进行切分
-            /// into_iter() 为迭代器中的每一个迭代都有一个切分区域的所有权
-            /// 确保在同一时间只有一个线程可以操作这个区域
-            /// enumerate() 适配器生成 vector 中的每个元素与其索引配对的元组
-            for (i, band) in bands.into_iter().enumerate() {
-                let top = rows_per_band * i;
-                let height = band.len() / bounds.0;
-                let band_bounds = (bounds.0, height);
+        use rayon::prelude::*;
+
+        bands.into_par_iter()
+            .for_each(|(i, band)| {
+                let top = i;
+                let band_bounds = (bounds.0, 1);
                 let band_upper_left =
                     pixel_to_point(bounds, (0, top), upper_left, lower_right);
                 let band_lower_right =
-                    pixel_to_point(bounds, (bounds.0, top + height),
+                    pixel_to_point(bounds, (bounds.0, top + 1),
                                     upper_left, lower_right);
-                /// 创建线程
-                /// move |_| {...}
-                /// move 关键字表示这个闭包对于它使用的变量的所有权
-                /// 参数列表 |_| 表示这个闭包接收一个参数但是它不使用
-                spawner.spawn(move |_| {
-                    render(band, band_bounds, band_upper_left, band_lower_right);
-                });
-            }
-        }).unwrap();
+                render(band, band_bounds, band_upper_left, band_lower_right);
+            });
     }
 
-    ///render(&mut pixels, bounds, upper_left, lower_right);
-
+    //render(&mut pixels, bounds, upper_left, lower_right);
     write_image(&args[1], &pixels, bounds)
         .expect("绘图异常");
 }
@@ -79,12 +62,12 @@ fn parse_pair<T:FromStr>(s: &str, separator: char) -> Option<(T, T)> {
         None => None,
         Some(index) => {
             /*
-             (T::from_str(&s[..index]), T::from_str(&s[index + 1..]))
-             &s[..index] 和 &s[..index + 1..] 是字符串的切片，在分隔符之前和之后
-             类型参数的 from_str 函数接收每一个参数将其转换成 T 类型值，产生元组结果
-             (Ok(l), Ok(r)) => Some((l, r)) 这个模式匹配元组的两个元素都是 Result 的 Ok 变体的情况
-             如果匹配成功 Some((l, r)) 是能够符合表达式的值，同时作为函数的返回值
-             _ => None 通配符表达式匹配任何内容，并忽略它的值
+            (T::from_str(&s[..index]), T::from_str(&s[index + 1..]))
+            &s[..index] 和 &s[..index + 1..] 是字符串的切片，在分隔符之前和之后
+            类型参数的 from_str 函数接收每一个参数将其转换成 T 类型值，产生元组结果
+            (Ok(l), Ok(r)) => Some((l, r)) 这个模式匹配元组的两个元素都是 Result 的 Ok 变体的情况
+            如果匹配成功 Some((l, r)) 是能够符合表达式的值，同时作为函数的返回值
+            _ => None 通配符表达式匹配任何内容，并忽略它的值
              */
             match (T::from_str(&s[..index]), T::from_str(&s[index + 1..])) {
                 (Ok(l), Ok(r)) => Some((l, r)),
@@ -146,10 +129,10 @@ fn write_image(filename:&str, pixels: &[u8], bounds: (usize, usize))
     let output = File::create(filename)?;
 
     let encoder = PNGEncoder::new(output);
-   /// encoder.write_image(&pixels,
-   ///                     bounds.0 as u32, bounds.1 as u32,
-   ///                     ColorType::L8)
-   ///                         .expect_err("绘图异常");
+   // encoder.write_image(&pixels,
+   //                     bounds.0 as u32, bounds.1 as u32,
+   //                     ColorType::L8)
+   //                         .expect_err("绘图异常");
     encoder.encode(&pixels,
                    bounds.0 as u32, bounds.1 as u32,
                     ColorType::Gray(8))?;
