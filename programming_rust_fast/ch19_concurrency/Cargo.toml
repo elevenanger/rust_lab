@@ -7,3 +7,5 @@ edition = "2021"
 
 [dependencies]
 rayon = "1.6.0"
+time = { version = "0.3", features = ["macros"] }
+lazy_static = { version = "1.4.0" }

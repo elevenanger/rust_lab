@@ -46,15 +46,15 @@ fn udp(domain: &str, query_type: Type) -> std::io::Result<Message> {
 
 }
 
-fn get_ip_info(ips: Vec<&str>) -> Result<HashMap<String, IpDetails>, IpError>{
+fn get_ip_info(ips: Vec<&str>) -> Result<HashMap<String, IpDetails>, IpError> {
     // Setup token and other configurations.
     let config = IpInfoConfig { token: Some("988a789b27b1f1".to_string()), ..Default::default() };
     // Setup IpInfo structure and start looking up IP addresses.
-    let mut ipinfo = IpInfo::new(config).expect("输入正确的 token ");
+    let mut ipinfo = IpInfo::new(config)?;
     ipinfo.lookup(ips.as_slice())
 }
 
-fn is_ip_record(record: &&Record) -> bool {
+fn is_ip_record(record: &Record) -> bool {
     match record.resource.r#type() {
         Type::A     => true,
         Type::AAAA  => true,
@@ -63,28 +63,20 @@ fn is_ip_record(record: &&Record) -> bool {
 }
 
 fn dns_message_to_ip_vec(message: Message) -> Vec<String> {
-        message.answers.iter()
+        message.answers.into_iter()
             .filter(is_ip_record)
             .map(|record| record.resource.to_string())
             .collect()
 }
 
-fn format_ip_details(details: HashMap<String, IpDetails>) {
+fn format_ip_details(details: HashMap<String, IpDetails>) -> GenericResult<()> {
     details.iter().for_each(
         |(key, details)| {
             println!("{} info =>", key);
             println!("{}", serde_json::to_string_pretty(details).unwrap())
         }
-    )
-}
-
-fn get_local_ip_addr() -> Option<String> {
-    let socket = UdpSocket::bind("0.0.0.0:0").unwrap();
-    socket.connect("8.8.8.8:83").unwrap();
-    match socket.local_addr() {
-        Ok(addr) => Some(addr.ip().to_string()),
-        Err(_) => None
-    }
+    );
+    Ok(())
 }
 
 fn get_public_ip() -> GenericResult<String> {
@@ -105,18 +97,17 @@ fn get_public_ip() -> GenericResult<String> {
     Ok(s)
 }
 
-fn main() {
+fn main() -> GenericResult<()> {
     let domain = "mgs.dgcb.com.cn";
     let query_type = Type::ANY;
-    let dns_result = udp(domain, query_type).unwrap();
+    let dns_result = udp(domain, query_type)?;
     let mut ips = dns_message_to_ip_vec(dns_result);
-    ips.push(get_public_ip().expect(""));
+    ips.push(get_public_ip()?);
     println!("records => {:?}", &ips);
 
-    let details =
-        get_ip_info(ips.iter().map(String::as_str).collect())
-            .unwrap();
+    let details = get_ip_info(
+        ips.iter().map(String::as_str).collect())?;
 
-    format_ip_details(details);
+    format_ip_details(details)
 
 }
