@@ -1,12 +1,9 @@
 use std::collections::HashMap;
 use std::error::Error;
-use std::fs::File;
-use std::io::{Read, Write};
 use rustdns::Message;
 use rustdns::types::*;
 use std::net::UdpSocket;
 use std::time::Duration;
-use curl::easy::Easy;
 use ipinfo::{IpDetails, IpError, IpInfo, IpInfoConfig};
 
 type GenericError = Box<dyn Error + Send + Sync + 'static>;
@@ -79,22 +76,12 @@ fn format_ip_details(details: HashMap<String, IpDetails>) -> GenericResult<()> {
     Ok(())
 }
 
-fn get_public_ip() -> GenericResult<String> {
-    let mut buf = File::create("./ip.dat")?;
-    let mut handle = Easy::new();
-    handle.url("https://ifconfig.me/")?;
+async fn get_public_ip() -> GenericResult<String> {
+    let url = "https://ifconfig.me";
+    let client = surf::Client::new();
+    let request= client.get(url).recv_string().await;
 
-    let mut transfer = handle.transfer();
-    transfer.write_function(|data| {
-        write!(buf, "{}", String::from_utf8(data.to_vec()).unwrap()).unwrap();
-        Ok(data.len())
-    })?;
-    transfer.perform()?;
-
-    let mut reader = File::open("./ip.dat")?;
-    let mut s = String::new();
-    reader.read_to_string(&mut s)?;
-    Ok(s)
+    Ok(request.unwrap())
 }
 
 fn main() -> GenericResult<()> {
@@ -102,7 +89,10 @@ fn main() -> GenericResult<()> {
     let query_type = Type::ANY;
     let dns_result = udp(domain, query_type)?;
     let mut ips = dns_message_to_ip_vec(dns_result);
-    ips.push(get_public_ip()?);
+
+    let local_ip = async_std::task::block_on(get_public_ip())?;
+    ips.push(local_ip);
+
     println!("records => {:?}", &ips);
 
     let details = get_ip_info(

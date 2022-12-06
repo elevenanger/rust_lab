@@ -1,5 +1,3 @@
-mod asynchronous_client_and_server;
-
 use std::{thread};
 use argonautica::Hasher;
 use async_std::{io, net};
